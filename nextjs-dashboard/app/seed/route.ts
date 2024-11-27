@@ -101,22 +101,44 @@ async function seedRevenue() {
   return insertedRevenue;
 }
 
-export async function GET() {
+async function seedDatabase() {
   try {
     await client.sql`BEGIN`;
+    console.log('Seeding users...')
     await seedUsers();
+    console.log('Seeding customers...')
     await seedCustomers();
+    console.log('Seeding invoices...')
     await seedInvoices();
+    console.log('Seeding revenue...')
     await seedRevenue();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
     await client.sql`ROLLBACK`;
+    console.error('Error during database seeding:', error)
     return Response.json({ error }, { status: 500 });
   }
+}
+
+export async function GET() {
+  try{
+    if (process.env.NODE_ENV === 'production') {
+      return Response.json({message: 'Seeding not allowed in production'}, {status: 403})
+    }
+    console.log('Starting database seeding...')
+    await seedDatabase()
+
+    return Response.json({message: 'Database seeded Successfully'})
+  } catch (error) {
+    return Response.json(
+      {error: error instanceof Error ? error.message : 'An unknown error occurred' }, 
+      {status: 500})
+  }
+}
   // return Response.json({
   //   message:
   //     'Uncomment this file and remove this line. You can delete this file when you are finished.',
   // });
-}
+

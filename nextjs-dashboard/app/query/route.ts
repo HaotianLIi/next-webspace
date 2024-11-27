@@ -15,10 +15,17 @@ async function listInvoices() {
 
 export async function GET() {
   try {
-    return Response.json(await listInvoices());
+    if (process.env.NODE_ENV === 'production') {
+      return Response.json(
+        { message: 'Querying invoices is not allowed in production.' },
+        { status: 403 }
+      )
+    }
+    const invoices = await listInvoices()
+    return Response.json(invoices);
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
-  }
+  return Response.json({ error }, { status: 500 });
+}
   // return Response.json({
   //   message:
   //     'Uncomment this file and remove this line. You can delete this file when you are finished.',

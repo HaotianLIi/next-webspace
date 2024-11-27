@@ -1,2 +1,5 @@
 # Table/Data
 /.schema/
+
+# db authetication
+.env

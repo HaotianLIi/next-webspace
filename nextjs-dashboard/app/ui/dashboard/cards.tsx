@@ -43,14 +43,13 @@ export function Card({
 
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
-      <div className="flex p-4">
+      <div className="flex flex-col items-center justify-center p-4 rounded-lg shadow-md bg-gray-50">
         {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
+        <h3 className="mt-2 text-md font-medium text-gray-500">
+          {title}
+        </h3>
       </div>
-      <p
-        className={`${lusitana.className}
-          truncate rounded-xl bg-white px-4 py-8 text-center text-2xl`}
-      >
+      <p className={`${lusitana.className} truncate rounded-xl bg-white px-4 py-8 text-center text-3xl font-bold`}>
         {value}
       </p>
     </div>

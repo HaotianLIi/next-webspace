@@ -11,7 +11,7 @@ export default async function dashboard(){
     return (
         <main>
             <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-                DashBoard
+                DashBoard Changes Test
             </h1>
             <div>
                 {/* <Card title="Collected" value={totalPaidInvoices} type="collected"/>
